@@ -1,4 +1,4 @@
-pipeline {
+pipeline{
     agent any
     tools{
         maven 'Maven-3.5.0'
@@ -13,27 +13,15 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t kumark77777/devops-integration .'
+                sh 'docker build -t kumark77777/devops-integration .'
                 }
             }
         }
-        stage('Push image to Hub'){
-            steps{
-                script{
-                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                   sh 'docker login -u kumark77777 -p ${dockerhubpwd}'
-
-}
-                   sh 'docker push kumark77777/devops-integration'
-                }
-            }
-        }
-        stage('Deploy to k8s'){
-            steps{
-                script{
-                    kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
-                }
+        stage('Push image to hub'){
+            steps:{
+                
             }
         }
     }
+        
 }
